@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Currency Converter</title>
+ <style>
+ body {
+ font-family: Arial, sans-serif;
+ background-color: #f0f0f0;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ height: 100vh;
+ margin: 0;
+ }
+ .converter {
+ background-color: white;
+ padding: 20px;
+ border-radius: 8px;
+ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ width: 300px;
+ text-align: center;
+ }
+ h1 {
+ font-size: 24px;
+ margin-bottom: 20px;
+ }
+ form {
+ margin-bottom: 20px;
+ }
+ label {
+ margin-top: 10px;
+ display: block;
+ font-size: 14px;
+ }
+ select, input, button {
+ width: 100%;
+ padding: 8px;
+ margin: 10px 0;
+ border-radius: 4px;
+ border: 1px solid #ccc;
+ }
+button {
+ background-color: #4CAF50;
+ color: white;
+ border: none;
+ cursor: pointer;
+ }
+ button:hover {
+ background-color: #45a049;
+ }
+ .result {
+ margin-top: 20px;
+ font-size: 18px;
+ color: #333;
+ }
+ </style>
+ </head>
+ <body>
+ <div class="converter">
+ <h1>Currency Converter</h1>
+ <form id="converter-form">
+ <label for="from-currency">From Currency:</label>
+ <select id="from-currency" name="from-currency">
+ <option value="USD">USD</option>
+ <option value="EUR">EUR</option>
+ <option value="GBP">GBP</option>
+ <option value="INR">INR</option>
+ <option value="JPY">JPY</option>
+ </select>
+ <label for="to-currency">To Currency:</label>
+ <select id="to-currency" name="to-currency">
+ <option value="USD">USD</option>
+ <option value="EUR">EUR</option>
+ <option value="GBP">GBP</option>
+ <option value="INR">INR</option>
+ <option value="JPY">JPY</option>
+ </select>
+ <label for="amount">Amount:</label>
+ <input type="number" id="amount" name="amount" placeholder="Enter amount"
+ required>
+ <button type="submit">Convert</button>
+ </form>
+<div class="result" id="result">
+ <!-- Conversion result will be shown here-->
+ </div>
+ </div>
+ <script>
+ document.getElementById('converter-form').addEventListener('submit', function(event) {
+ event.preventDefault();
+ // Get user inputs
+ const fromCurrency = document.getElementById('from-currency').value;
+ const toCurrency = document.getElementById('to-currency').value;
+ const amount = parseFloat(document.getElementById('amount').value);
+ // Simple hardcoded exchange rates
+ const exchangeRates = {
+ 'USD': { 'EUR': 0.85, 'GBP': 0.75, 'INR': 75.0, 'JPY': 110.0 },
+ 'EUR': { 'USD': 1.18, 'GBP': 0.88, 'INR': 88.0, 'JPY': 130.0 },
+ 'GBP': { 'USD': 1.33, 'EUR': 1.14, 'INR': 100.0, 'JPY': 148.0 },
+ 'INR': { 'USD': 0.013, 'EUR': 0.011, 'GBP': 0.01, 'JPY': 1.48 },
+ 'JPY': { 'USD': 0.0091, 'EUR': 0.0077, 'GBP': 0.0068, 'INR': 0.68 }
+ };
+ // Check if the conversion rate exists
+ if (exchangeRates[fromCurrency] && exchangeRates[fromCurrency][toCurrency]) {
+ const rate = exchangeRates[fromCurrency][toCurrency];
+ const convertedAmount = (amount * rate).toFixed(2);
+ // Display the result
+ document.getElementById('result').innerHTML = `
+ ${amount} ${fromCurrency} is equal to ${convertedAmount} ${toCurrency}.
+ `;
+ } else {
+ document.getElementById('result').innerHTML = "Conversion rate not available.";
+ }
+ });
+ </script>
+ </body>
+ </html>
